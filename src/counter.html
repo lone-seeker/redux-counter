@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>现在的数是：</h1><span id="span"></span>
+    <hr>
+    <button id="add">+</button>
+    <button id="reduce">-</button>
+</body>
+<script src="redux.min.js"></script>
+<script>
+    let addBtn = document.querySelector('#add');
+    let minBtn = document.querySelector('#reduce');
+    let span = document.querySelector('#span');
+
+    function reducers(state, action) {
+        if (state == undefined){
+            state = 0 ;
+        }
+        if(action.type == 'ADD'){
+            return state+1;
+        }
+        if(action.type == 'REDUCE'){
+            return state-1;
+        }
+    return state;
+    }
+
+    let store = Redux.createStore(reducers);
+
+    function render() {
+        span.innerText = store.getState();
+    }
+
+    render();
+    store.subscribe(render);
+
+    addBtn.onclick = function () {
+        store.dispatch({type:'ADD'})
+    }
+    minBtn.onclick = function () {
+        store.dispatch({type:'REDUCE'})
+    }
+</script>
+</html>
